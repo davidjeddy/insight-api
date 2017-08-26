@@ -1,0 +1,113 @@
+{
+	"variables": [],
+	"info": {
+		"name": "insight.offsetby1",
+		"_postman_id": "14edba9f-4799-ca2c-16e7-be867282e79f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{BASE_URL}}/article/index",
+			"request": {
+				"url": "{{BASE_URL}}/article/index",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "{{BASE_URL}}/customer/index",
+			"request": {
+				"url": "{{BASE_URL}}/customer/index",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "{{BASE_URL}}/customer/manager",
+			"request": {
+				"url": "{{BASE_URL}}/manager/index",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "{{BASE_URL}}/payment/index",
+			"request": {
+				"url": "{{BASE_URL}}/payment/index",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "{{BASE_URL}}/store/index",
+			"request": {
+				"url": "{{BASE_URL}}/store/index",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "{{BASE_URL}}/test/index",
+			"request": {
+				"url": "{{BASE_URL}}/test/index",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

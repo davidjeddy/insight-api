@@ -16,7 +16,7 @@ class m170826062822_InsightSchemaStart extends Migration
 DROP TABLE IF EXISTS `payment`;
 DROP TABLE IF EXISTS `order`;
 DROP TABLE IF EXISTS `store`;
-DROP TABLE IF EXISTS `managers`;
+DROP TABLE IF EXISTS `manager`;
 DROP TABLE IF EXISTS `customer`;
 
 # customer
@@ -26,8 +26,8 @@ CREATE TABLE `customer` (
     username varchar(75) not null
 ) ENGINE=innodb;
 
-# managers
-CREATE TABLE `managers` (
+# manager
+CREATE TABLE `manager` (
     manager_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name varchar(75) not null,
     last_name varchar(75) not null,
@@ -41,7 +41,7 @@ CREATE TABLE `store` (
     name varchar(75) not null,
     zip int not null,
     manager_id int not null,
-    FOREIGN KEY (manager_id) REFERENCES managers(manager_id)
+    FOREIGN KEY (manager_id) REFERENCES manager(manager_id)
 ) ENGINE=innodb;
 
 # order
@@ -90,7 +90,7 @@ CREATE TABLE `payment` (
 DROP TABLE IF EXISTS `payment`;
 DROP TABLE IF EXISTS `order`;
 DROP TABLE IF EXISTS `store`;
-DROP TABLE IF EXISTS `managers`;
+DROP TABLE IF EXISTS `manager`;
 DROP TABLE IF EXISTS `customer`;
 
             SET SQL_MODE=@OLD_SQL_MODE;
