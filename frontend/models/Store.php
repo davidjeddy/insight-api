@@ -65,7 +65,7 @@ class Store extends Base
      */
     public function getOrders()
     {
-        return $this->hasMany(Order::className(), ['store_id' => 'store_id']);
+        return $this->hasMany(Order::className(), ['store_id' => 'id']);
     }
 
     /**
@@ -83,12 +83,18 @@ class Store extends Base
     {
         parent::afterFind();
 
+        $prevWeekSunday = strtotime('last Sunday - 2 week');
+        $prevWeekSaturday=strtotime('last Sunday - 1 week') -1; // tick backwards into the prev. week;s Saturday
+        $lastWeekSunday = strtotime('last Sunday - 1 week');
+        $lastWeekSaturday=strtotime('last Saturday');
+
         $data = \Yii::$app->db->createCommand("
 select s.id as `store_id`, 
+        s.name as `store_name`,
         weekreq.`week_count` as `week_order_ct`,
         weekreq.`revenue_current` as `revenue`,
         # Calculate renewal rate by dividing old vs new
-        prevweek.`prev_order_ct` / weekreq.`week_count` as `renewal_rate`,
+        weekreq.`week_count` / prevweek.`prev_order_ct` as `renewal_rate` ,
         weekreq.`avg_order_value`as `avg_order_value`  # Average Order Value
 from store s
 inner join (
@@ -98,8 +104,10 @@ inner join (
     o.store_id
     FROM `order` o
     where # o.store_id = s.id AND
-    o.order_date >= UNIX_TIMESTAMP('2017-08-07 00:00')  AND 
-    o.order_date <= UNIX_TIMESTAMP('2017-08-14 00:00') # This is the week range for PREVIOUS period
+--     o.order_date >= UNIX_TIMESTAMP('2017-08-07 00:00')  AND 
+--     o.order_date <= UNIX_TIMESTAMP('2017-08-14 00:00') # This is the week range for PREVIOUS period
+    o.order_date >= " . $prevWeekSunday . " AND
+    o.order_date <= " . $prevWeekSaturday . "
     group by o.store_id
 ) as `prevweek`
     on prevweek.store_id = s.id # join up order info for this store for PREVIOUS week
@@ -109,15 +117,27 @@ inner join (
         count(*) as `week_count`,
         avg(total_amount) as `avg_order_value`,
         o.store_id
-    FROM `order` o # on oe.store_id = s.id AND    
-    WHERE
-        o.order_date > 1502830560 AND 
-        o.order_date <= 1502844300 # This is the week actually requested
+        #,DATE(from_unixtime(o.order_date))
+        FROM `order` o # on oe.store_id = s.id AND    
+        WHERE
+        --     o.order_date >  UNIX_TIMESTAMP('2017-08-14 00:00') AND 
+    --         o.order_date <=  UNIX_TIMESTAMP('2017-08-21 00:00') # This is the week actually requested
+            o.order_date > " . $lastWeekSunday . " AND 
+            o.order_date <=  " . $lastWeekSaturday . "
+        AND o.customer_id in ( 
+            select o.customer_id as `customer_id`
+            #,store_id,
+            #DATE(from_unixtime(o.order_date))
+            from `order` o 
+            where         
+            o.order_date >= " . $prevWeekSunday . " AND
+            o.order_date <= " . $prevWeekSaturday . "
+        )
     group by o.store_id
 ) as `weekreq`
     on weekreq.store_id = s.id  
         AND prevweek.store_id
-        AND s.id = ".$this->id."
+        AND s.id = " . $this->id . "
         ")->queryAll();
 
         $this->order_count = (int)$data[0]['week_order_ct'];

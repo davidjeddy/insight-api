@@ -95,4 +95,22 @@ class BaseController extends ActiveController
 
         return parent::beforeAction($action);
     }
+
+    /**
+     * @param $id
+     *
+     * @return array|null|\yii\db\ActiveRecord
+     * @throws HttpException
+     */
+    public function findModel($id)
+    {
+        $model = ($this->modelClass)::find()
+            ->andWhere(['id' => (int)$id])
+            ->one();
+        if (!$model) {
+            throw new HttpException(404);
+        }
+
+        return $model;
+    }
 }
