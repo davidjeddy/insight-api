@@ -86,7 +86,7 @@ class Store extends Base
         $defaultRangeStart = strtotime('last Sunday - 1 week');
         $defaultRangeEnd = strtotime('last Sunday');
 
-        $this->order_count = \Yii::$app->db->createCommand('SELECT count(*) FROM order')->execute();
+        $this->order_count = 33; //\Yii::$app->db->createCommand('SELECT count(*) FROM order')->execute();
         $this->renewal_rate = round((17/33), 3);
         $this->renewal_count = 17;
         $this->aov = '12.34';
