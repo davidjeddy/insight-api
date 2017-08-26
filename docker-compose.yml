@@ -19,7 +19,7 @@ app:
 nginx:
   image: nginx:1.12-alpine
   ports:
-    - "80:80"
+    - "8080:8080"
   volumes:
     - ./:/app
     - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/vhost.conf
@@ -30,3 +30,11 @@ mailcatcher:
     image: schickling/mailcatcher:latest
     ports:
       - "1080:1080"
+
+nginx_ui:
+  image: nginx:1.12-alpine
+  ports:
+    - "80:80"
+  volumes:
+    - ../insight-ui:/app
+    - ./docker/nginx/vhost_ui.conf:/etc/nginx/conf.d/vhost.conf

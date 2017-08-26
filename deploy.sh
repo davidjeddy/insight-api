@@ -16,3 +16,9 @@ docker exec -it hackathonproject_app_1 php composer.phar install --ansi --profil
 # run migrations
 docker exec -it hackathonproject_app_1 php ./console/yii app/setup --interactive=0
 docker exec -it hackathonproject_app_1 php ./console/yii migrate/up --interactive=0
+
+# update the UI app
+cd ../insight-ui/
+git fetch origin
+git checkout master
+git pull origin master
