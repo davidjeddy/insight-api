@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -15,14 +15,14 @@ use Yii;
  *
  * @property Store[] $stores
  */
-class Managers extends \yii\db\ActiveRecord
+class Manager extends Base
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'managers';
+        return 'manager';
     }
 
     /**

@@ -19,7 +19,7 @@ use Yii;
  * @property Customer $customer
  * @property Store $store
  */
-class Order extends \yii\db\ActiveRecord
+class Order extends Base
 {
     /**
      * @inheritdoc

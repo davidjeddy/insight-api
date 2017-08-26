@@ -13,9 +13,9 @@ use Yii;
  * @property integer $manager_id
  *
  * @property Order[] $orders
- * @property Managers $manager
+ * @property Manager $manager
  */
-class Store extends \yii\db\ActiveRecord
+class Store extends Base
 {
     /**
      * @inheritdoc
@@ -64,6 +64,6 @@ class Store extends \yii\db\ActiveRecord
      */
     public function getManager()
     {
-        return $this->hasOne(Managers::className(), ['manager_id' => 'manager_id']);
+        return $this->hasOne(Manager::className(), ['manager_id' => 'manager_id']);
     }
 }

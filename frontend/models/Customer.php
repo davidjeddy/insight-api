@@ -13,7 +13,7 @@ use Yii;
  *
  * @property Order[] $orders
  */
-class Customer extends \yii\db\ActiveRecord
+class Customer extends Base
 {
     /**
      * @inheritdoc

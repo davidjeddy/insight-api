@@ -17,7 +17,7 @@ use Yii;
  * @property Customer $customer
  * @property Order $order
  */
-class Payment extends \yii\db\ActiveRecord
+class Payment extends Base
 {
     /**
      * @inheritdoc
