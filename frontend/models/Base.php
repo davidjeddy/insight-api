@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 
 /**
- * This is the model class for table "customer".
+ * This is the model class for `Insight` data tables.
  *
  * @property integer $customer_id
  * @property string $role
@@ -30,13 +30,14 @@ class Base extends \yii\db\ActiveRecord
         foreach ($this->getAttributes() as $key => $value)
         {
             if ($this->endsWith($value, '_date')) {
-                $this->setAttribute($key, date(self::RESPONSE_DATE_FORMAT, $value));
+                $this->setAttribute($key, date(self::RESPONSE_DATE_FORMAT, (int)$value));
             }
         }
     }
 
     /**
      * @param bool $insert
+     * @return $this
      * @throws \Exception
      */
     public function beforeSave($insert)
@@ -48,9 +49,11 @@ class Base extends \yii\db\ActiveRecord
         foreach ($this->getAttributes() as $key => $value)
         {
             if ($this->endsWith($value, '_date')) {
-                $this->setAttribute($key, strtotime($value));
+                $this->setAttribute($key, strtotime((string)$value));
             }
         }
+
+        return $this;
     }
 
     /**
