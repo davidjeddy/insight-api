@@ -87,7 +87,7 @@ class Store extends Base
         $defaultRangeEnd = strtotime('last Sunday');
 
         $this->order_count = 33;
-        $this->renewal_rate = '0.66';
+        $this->renewal_rate = round((17/33), 3);
         $this->renewal_count = 17;
         $this->aov = '12.34';
         $this->revenue = '1234.56';
