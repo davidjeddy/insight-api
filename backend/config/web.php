@@ -24,7 +24,10 @@ $config = [
         ],
         'request' => [
             'cookieValidationKey' => env('BACKEND_COOKIE_VALIDATION_KEY'),
-            'baseUrl' => env('BACKEND_BASE_URL')
+            'baseUrl' => env('BACKEND_BASE_URL'),
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'class' => yii\web\User::class,
@@ -39,13 +42,6 @@ $config = [
             'class' => backend\modules\i18n\Module::class,
             'defaultRoute' => 'i18n-message/index'
         ],
-
-        'api' => [
-            'class' => \backend\modules\api\Module::class,
-            'modules' => [
-                'v1' => \backend\modules\api\v1\Module::class
-            ]
-        ]
     ],
     'as globalAccess' => [
         'class' => common\behaviors\GlobalAccessBehavior::class,
