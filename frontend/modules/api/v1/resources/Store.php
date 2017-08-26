@@ -26,6 +26,7 @@ class Store extends \frontend\models\Store implements Linkable
             'renewal_count',
             'aov',
             'revenue',
+            'rolling_revenue',
         ];
     }
 

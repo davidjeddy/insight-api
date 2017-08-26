@@ -25,6 +25,7 @@ class Store extends Base
     public $renewal_count = null;
     public $aov = null;
     public $revenue = null;
+    public $rolling_revenue = null;
 
     /**
      * @inheritdoc

@@ -33,15 +33,15 @@ class StoreController extends BaseController
             $data = \Yii::$app->db->createCommand("
                 select sum(total_amount) as weekly_revenue
                 from `order`
-                where store_id = {$model->id}
-                AND order_date <= {$endDate}
+                where store_id = " .$model->id . "
+                AND order_date <= " .$endDate . "
                 AND order_date > " . ($endDate - self::SEC_PER_WEEK) . "
             ")->queryAll();
 
             $endDate = $endDate - self::SEC_PER_WEEK;
 
-            $model->revenue[$i]['data'] = date('n/j/Y', $endDate);
-            $model->revenue[$i]['value'] = (int)$data[0]['weekly_revenue'];
+            $model->rolling_revenue[$i]['data'] = date('n/j/Y', $endDate);
+            $model->rolling_revenue[$i]['value'] = (int)$data[0]['weekly_revenue'];
         }
         return $model;
     }
