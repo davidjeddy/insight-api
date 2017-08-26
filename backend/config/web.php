@@ -38,6 +38,13 @@ $config = [
         'i18n' => [
             'class' => backend\modules\i18n\Module::class,
             'defaultRoute' => 'i18n-message/index'
+        ],
+
+        'api' => [
+            'class' => \backend\modules\api\Module::class,
+            'modules' => [
+                'v1' => \backend\modules\api\v1\Module::class
+            ]
         ]
     ],
     'as globalAccess' => [
