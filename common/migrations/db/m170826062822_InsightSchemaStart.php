@@ -67,7 +67,7 @@ CREATE TABLE `payment` (
     customer_id int not null,
     del_date TIMESTAMP not null,
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    FOREIGN KEY (order_id) REFERENCES order(order_id)
+    FOREIGN KEY (order_id) REFERENCES `order`(order_id)
 ) ENGINE=innodb;
 
             SET SQL_MODE=@OLD_SQL_MODE;
