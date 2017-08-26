@@ -83,13 +83,47 @@ class Store extends Base
     {
         parent::afterFind();
 
-        $defaultRangeStart = strtotime('last Sunday - 1 week');
-        $defaultRangeEnd = strtotime('last Sunday');
+        $data = \Yii::$app->db->createCommand("
+select s.id as `store_id`, 
+        weekreq.`week_count` as `week_order_ct`,
+        weekreq.`revenue_current` as `revenue`,
+        # Calculate renewal rate by dividing old vs new
+        prevweek.`prev_order_ct` / weekreq.`week_count` as `renewal_rate`,
+        weekreq.`avg_order_value`as `avg_order_value`  # Average Order Value
+from store s
+inner join (
+    select
+    count(*) as `prev_order_ct`,
+    sum(total_amount) as `revenue_prev`,
+    o.store_id
+    FROM `order` o
+    where # o.store_id = s.id AND
+    o.order_date >= UNIX_TIMESTAMP('2017-08-07 00:00')  AND 
+    o.order_date <= UNIX_TIMESTAMP('2017-08-14 00:00') # This is the week range for PREVIOUS period
+    group by o.store_id
+) as `prevweek`
+    on prevweek.store_id = s.id # join up order info for this store for PREVIOUS week
+inner join (
+    select 
+        sum(total_amount) as `revenue_current`,
+        count(*) as `week_count`,
+        avg(total_amount) as `avg_order_value`,
+        o.store_id
+    FROM `order` o # on oe.store_id = s.id AND    
+    WHERE
+        o.order_date > 1502830560 AND 
+        o.order_date <= 1502844300 # This is the week actually requested
+    group by o.store_id
+) as `weekreq`
+    on weekreq.store_id = s.id  
+        AND prevweek.store_id
+        AND s.id = ".$this->id."
+        ")->queryAll();
 
-        $this->order_count = 33; //\Yii::$app->db->createCommand('SELECT count(*) FROM order')->execute();
-        $this->renewal_rate = round((17/33), 3);
-        $this->renewal_count = 17;
-        $this->aov = '12.34';
-        $this->revenue = '1234.56';
+        $this->order_count = (int)$data[0]['week_order_ct'];
+        $this->renewal_rate = round($data[0]['renewal_rate'], 2);
+        $this->renewal_count = (int)$data[0]['week_order_ct'];
+        $this->aov = round($data[0]['avg_order_value'], 2);
+        $this->revenue = round($data[0]['revenue'], 2);
     }
 }
