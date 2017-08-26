@@ -44,7 +44,7 @@ class Store extends Base
     public function attributeLabels()
     {
         return [
-            'store_id' => Yii::t('app', 'Store ID'),
+            'id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
             'zip' => Yii::t('app', 'Zip'),
             'manager_id' => Yii::t('app', 'Manager ID'),
@@ -56,7 +56,7 @@ class Store extends Base
      */
     public function getOrders()
     {
-        return $this->hasMany(Order::className(), ['store_id' => 'store_id']);
+        return $this->hasMany(Order::className(), ['store_id' => 'id']);
     }
 
     /**
@@ -64,6 +64,6 @@ class Store extends Base
      */
     public function getManager()
     {
-        return $this->hasOne(Manager::className(), ['manager_id' => 'manager_id']);
+        return $this->hasOne(Manager::className(), ['manager_id' => 'id']);
     }
 }

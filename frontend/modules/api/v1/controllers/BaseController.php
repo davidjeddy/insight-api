@@ -39,5 +39,5 @@ class BaseController extends ActiveController
                 'modelClass'  => $this->modelClass
             ],
         ];
-    }   
+    }
 }

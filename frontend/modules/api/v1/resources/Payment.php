@@ -17,7 +17,7 @@ class Payment extends \frontend\models\Payment implements Linkable
     public function fields()
     {
         return [
-            'payment_id',
+            'id',
             'total_amount',
             'status',
             'order_id',

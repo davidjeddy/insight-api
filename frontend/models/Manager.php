@@ -44,7 +44,7 @@ class Manager extends Base
     public function attributeLabels()
     {
         return [
-            'manager_id' => Yii::t('app', 'Manager ID'),
+            'id' => Yii::t('app', 'Manager ID'),
             'first_name' => Yii::t('app', 'First Name'),
             'last_name' => Yii::t('app', 'Last Name'),
             'cell_number' => Yii::t('app', 'Cell Number'),
@@ -57,6 +57,6 @@ class Manager extends Base
      */
     public function getStores()
     {
-        return $this->hasMany(Store::className(), ['manager_id' => 'manager_id']);
+        return $this->hasMany(Store::className(), ['manager_id' => 'id']);
     }
 }

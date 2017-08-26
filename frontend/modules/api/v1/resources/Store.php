@@ -14,7 +14,7 @@ class Store extends \frontend\models\Store implements Linkable
     public function fields()
     {
         return [
-            'store_id',
+            'id',
             'name',
             'zip',
             'manager_id',

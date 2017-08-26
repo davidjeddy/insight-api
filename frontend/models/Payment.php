@@ -48,7 +48,7 @@ class Payment extends Base
     public function attributeLabels()
     {
         return [
-            'payment_id' => Yii::t('app', 'Payment ID'),
+            'id' => Yii::t('app', 'Payment ID'),
             'total_amount' => Yii::t('app', 'Total Amount'),
             'status' => Yii::t('app', 'Status'),
             'order_id' => Yii::t('app', 'Order ID'),
@@ -62,7 +62,7 @@ class Payment extends Base
      */
     public function getCustomer()
     {
-        return $this->hasOne(Customer::className(), ['customer_id' => 'customer_id']);
+        return $this->hasOne(Customer::className(), ['customer_id' => 'id']);
     }
 
     /**
@@ -70,6 +70,6 @@ class Payment extends Base
      */
     public function getOrder()
     {
-        return $this->hasOne(Order::className(), ['order_id' => 'order_id']);
+        return $this->hasOne(Order::className(), ['order_id' => 'id']);
     }
 }

@@ -50,7 +50,7 @@ class Order extends Base
     public function attributeLabels()
     {
         return [
-            'order_id' => Yii::t('app', 'Order ID'),
+            'id' => Yii::t('app', 'Order ID'),
             'customer_id' => Yii::t('app', 'Customer ID'),
             'order_date' => Yii::t('app', 'Order Date'),
             'store_id' => Yii::t('app', 'Store ID'),
@@ -66,7 +66,7 @@ class Order extends Base
      */
     public function getCustomer()
     {
-        return $this->hasOne(Customer::className(), ['customer_id' => 'customer_id']);
+        return $this->hasOne(Customer::className(), ['customer_id' => 'id']);
     }
 
     /**
@@ -74,6 +74,6 @@ class Order extends Base
      */
     public function getStore()
     {
-        return $this->hasOne(Store::className(), ['store_id' => 'store_id']);
+        return $this->hasOne(Store::className(), ['store_id' => 'id']);
     }
 }

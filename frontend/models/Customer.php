@@ -40,7 +40,7 @@ class Customer extends Base
     public function attributeLabels()
     {
         return [
-            'customer_id' => Yii::t('app', 'Customer ID'),
+            'id' => Yii::t('app', 'Customer ID'),
             'role' => Yii::t('app', 'Role'),
             'username' => Yii::t('app', 'Username'),
         ];
@@ -51,6 +51,6 @@ class Customer extends Base
      */
     public function getOrders()
     {
-        return $this->hasMany(Order::className(), ['customer_id' => 'customer_id']);
+        return $this->hasMany(Order::className(), ['customer_id' => 'id']);
     }
 }

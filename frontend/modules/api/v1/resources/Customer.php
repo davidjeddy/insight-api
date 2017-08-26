@@ -14,7 +14,7 @@ class Customer extends \frontend\models\Customer implements Linkable
     public function fields()
     {
         return [
-            'customer_id',
+            'id',
             'role',
             'username'
         ];
