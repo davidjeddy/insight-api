@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # repo steps
 git fetch origin
 git checkout devel
