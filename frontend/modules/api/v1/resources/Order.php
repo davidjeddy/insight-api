@@ -7,7 +7,7 @@ use yii\web\Linkable;
 use yii\web\Link;
 
 /**
- * @author Eugene Terentev <eugene@terentev.net>
+ * @author David J Eddy <me@davidjeddy.com>
  */
 class Order extends \frontend\models\Order implements Linkable
 {

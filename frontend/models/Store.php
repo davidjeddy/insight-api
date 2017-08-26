@@ -18,6 +18,15 @@ use Yii;
 class Store extends Base
 {
     /**
+     * Added properties for stores over a given date range
+     */
+    public $order_count = null;
+    public $renewal_rate = null;
+    public $renewal_count = null;
+    public $aov = null;
+    public $revenue = null;
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -56,7 +65,7 @@ class Store extends Base
      */
     public function getOrders()
     {
-        return $this->hasMany(Order::className(), ['store_id' => 'id']);
+        return $this->hasMany(Order::className(), ['store_id' => 'store_id']);
     }
 
     /**
@@ -64,6 +73,23 @@ class Store extends Base
      */
     public function getManager()
     {
-        return $this->hasOne(Manager::className(), ['manager_id' => 'id']);
+        return $this->hasOne(Manager::className(), ['manager_id' => 'manager_id']);
+    }
+
+    /**
+     *
+     */
+    public function afterFind()
+    {
+        parent::afterFind();
+
+        $defaultRangeStart = strtotime('last Sunday - 1 week');
+        $defaultRangeEnd = strtotime('last Sunday');
+
+        $this->order_count = 33;
+        $this->renewal_rate = '0.66';
+        $this->renewal_count = 17;
+        $this->aov = '12.34';
+        $this->revenue = '1234.56';
     }
 }

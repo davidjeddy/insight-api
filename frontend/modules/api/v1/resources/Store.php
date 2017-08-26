@@ -7,10 +7,13 @@ use yii\web\Linkable;
 use yii\web\Link;
 
 /**
- * @author Eugene Terentev <eugene@terentev.net>
+ * @author David J Eddy <me@davidjeddy.com>
  */
 class Store extends \frontend\models\Store implements Linkable
 {
+    /**
+     * @return array
+     */
     public function fields()
     {
         return [
@@ -18,6 +21,11 @@ class Store extends \frontend\models\Store implements Linkable
             'name',
             'zip',
             'manager_id',
+            'order_count',
+            'renewal_rate',
+            'renewal_count',
+            'aov',
+            'revenue',
         ];
     }
 
