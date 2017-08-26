@@ -11,6 +11,7 @@ docker stop db
 
 # run php dependency update
 dpcker exec -it hackathonproject_app_1 wget https://getcomposer.org/composer.phar -O composer.phar
+docker exec -it hackathonproject_app_1 php composer.phar install --ansi --profile --prefer-source -o -vvv
 docker exec -it hackathonproject_app_1 php composer.phar update --ansi --profile --prefer-source -o -vvv
 
 # run migrations
