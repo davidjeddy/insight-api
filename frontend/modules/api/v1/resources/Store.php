@@ -11,6 +11,16 @@ use yii\web\Link;
  */
 class Store extends \frontend\models\Store implements Linkable
 {
+    public function fields()
+    {
+        return [
+            'store_id',
+            'name',
+            'zip',
+            'manager_id',
+        ];
+    }
+
     /**
      * Returns a list of links.
      *

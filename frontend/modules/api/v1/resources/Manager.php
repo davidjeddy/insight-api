@@ -11,6 +11,17 @@ use yii\web\Link;
  */
 class Manager extends \frontend\models\Manager implements Linkable
 {
+    public function fields()
+    {
+        return [
+            'id',
+            'first_name',
+            'last_name',
+            'cell_number',
+            'email',
+        ];
+    }
+
     /**
      * Returns a list of links.
      *

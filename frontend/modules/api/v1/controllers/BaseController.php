@@ -18,6 +18,7 @@ class BaseController extends ActiveController
      * @var string
      */
     public $modelClass = null;
+
     /**
      * @var array
      */
@@ -32,29 +33,16 @@ class BaseController extends ActiveController
     public function actions()
     {
         return [
-            'index' => [
-                'class' => 'yii\rest\IndexAction',
-                'modelClass' => $this->modelClass,
-                'prepareDataProvider' => [$this, 'prepareDataProvider']
+            'index'   => [
+                'class'       => \yii\rest\IndexAction::class,
+                'modelClass'  => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
             ],
-            'view' => [
-                'class' => 'yii\rest\ViewAction',
-                'modelClass' => $this->modelClass,
-                'findModel' => [$this, 'findModel']
+            'view'    => [
+                'class'       => \yii\rest\ViewAction::class,
+                'modelClass'  => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
             ],
-            'create' => [
-                'class' => 'yii\rest\CreateAction',
-                'modelClass' => $this->modelClass,
-                'findModel' => [$this, 'findModel']
-            ],
-            'delete' => [
-                'class' => 'yii\rest\DeleteAction',
-                'modelClass' => $this->modelClass,
-                'findModel' => [$this, 'findModel']
-            ],
-            'options' => [
-                'class' => 'yii\rest\OptionsAction'
-            ]
         ];
     }
 

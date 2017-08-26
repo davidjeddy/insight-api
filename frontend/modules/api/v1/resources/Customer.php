@@ -11,6 +11,15 @@ use yii\web\Link;
  */
 class Customer extends \frontend\models\Customer implements Linkable
 {
+    public function fields()
+    {
+        return [
+            'customer_id',
+            'role',
+            'username'
+        ];
+    }
+
     /**
      * Returns a list of links.
      *

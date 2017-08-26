@@ -12,6 +12,21 @@ use yii\web\Link;
 class Payment extends \frontend\models\Payment implements Linkable
 {
     /**
+     * @return array
+     */
+    public function fields()
+    {
+        return [
+            'payment_id',
+            'total_amount',
+            'status',
+            'order_id',
+            'customer_id',
+            'del_date',
+        ];
+    }
+
+    /**
      * Returns a list of links.
      *
      * @return array the links
