@@ -242,6 +242,41 @@
 					"response": []
 				},
 				{
+					"name": "{{BASE_URL}}/manager/view?id={id}",
+					"request": {
+						"url": {
+							"raw": "{{BASE_URL}}/manager/view?id=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"manager",
+								"view"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "{{BASE_URL}}/store/view?id={id}",
 					"request": {
 						"url": {
