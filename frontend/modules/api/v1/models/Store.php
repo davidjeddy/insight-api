@@ -26,6 +26,7 @@ class Store extends Base
     public $aov = null;
     public $revenue = null;
     public $rolling_revenue = null;
+    public $manager = [];
 
     /**
      * @inheritdoc
@@ -44,7 +45,7 @@ class Store extends Base
             [['name', 'zip', 'manager_id'], 'required'],
             [['zip', 'manager_id'], 'integer'],
             [['name'], 'string', 'max' => 75],
-            [['lati', 'long'], 'strig', 'max' => 16],
+            [['lati', 'long'], 'string', 'max' => 16],
             [['manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => Manager::className(), 'targetAttribute' => ['manager_id' => 'manager_id']],
         ];
     }
@@ -149,5 +150,9 @@ inner join (
         $this->renewal_count = (int)$data[0]['week_order_ct'];
         $this->aov = round($data[0]['avg_order_value'], 2);
         $this->revenue = round($data[0]['revenue'], 2);
+
+        $this->manager = \frontend\modules\api\v1\models\Manager::find()
+            ->andWhere(['id' => $this->getAttribute('manager_id')])
+            ->one();
     }
 }

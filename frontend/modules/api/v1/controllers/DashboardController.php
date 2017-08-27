@@ -40,7 +40,7 @@ class DashboardController extends BaseController
         }
         $renewal    = CustomerMDL::getRenewal();
         $c_renewal  = CustomerMDL::getCumulativeRenewal();
-        
+
         $data['renewal']            = (float)round(($renewal[0]['renewal_rate'] * 100), 2);
         $data['cumulative_renewal'] = (float)round(($c_renewal[0]['cum_renewal_rate'] * 100), 2);
         $data['new_customers']      = CustomerMDL::getNewCustomers(); // array

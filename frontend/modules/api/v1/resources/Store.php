@@ -28,7 +28,8 @@ class Store extends \frontend\modules\api\v1\models\Store implements Linkable
             'revenue',
             'rolling_revenue',
             'lati',
-            'long'
+            'long',
+            'manager'
         ];
     }
 
