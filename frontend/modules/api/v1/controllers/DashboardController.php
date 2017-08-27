@@ -36,7 +36,8 @@ class DashboardController extends BaseController
         $renewal = \frontend\models\Customer::getRenewal();
         $data['renewal']            = round(($renewal[0]['renewal_rate'] * 100), 2);
 
-        $data['cumulative_renewal'] = 12;
+        $c_renewal = \frontend\models\Customer::getCumulativeRenewal();
+        $data['cumulative_renewal'] = round(($c_renewal[0]['cum_renewal_rate'] * 100), 2);
 
         $data['new_customers']  = \frontend\modules\api\v1\resources\Customer::getNewCustomers();
         $data['lost_customers'] = \frontend\modules\api\v1\resources\Customer::getLostCustomers();

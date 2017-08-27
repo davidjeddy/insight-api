@@ -149,9 +149,9 @@ inner join (
     {
         $dates = \Yii::$app->Insight->dates;
 
-        $storyQuery = '';
+        $storeQuery = '';
         if (!empty(\Yii::$app->request->getQueryParam('store_id'))) {
-            $storyQuery .= "where o.store_id = " . (int)\Yii::$app->request->getQueryParam('store_id');
+            $storeQuery .= "where o.store_id = " . (int)\Yii::$app->request->getQueryParam('store_id');
         }
 
         $query = "
@@ -164,7 +164,7 @@ select
                         on o.customer_id = c.id 
                             AND o.order_date >= " . $dates['prevWeekSunday'] . "  # start date
                             AND o.order_date < " . $dates['prevWeekSaturday'] . "
-                    " . $storyQuery . "
+                    " . $storeQuery . "
         ) as `renewal_rate`
         
 from customer c 
@@ -177,7 +177,7 @@ inner join (
         on o.customer_id = c.id 
         AND o.order_date >= " . $dates['lastWeekSunday'] . "  # start date
         AND o.order_date < " . $dates['lastWeekSaturday'] . "
-    " . $storyQuery . "
+    " . $storeQuery . "
 ) as `cur_stats`
     on `cur_stats`.`cur_distinct` = c.id #`prev_stats`.`prev_distinct`
 inner join (
@@ -190,11 +190,69 @@ inner join (
         on o.customer_id = c.id 
             AND o.order_date >= " . $dates['prevWeekSunday'] . "  # start date
             AND o.order_date < " . $dates['prevWeekSaturday'] . "
-    " . $storyQuery . "
+    " . $storeQuery . "
 ) as `prev_stats`
     on `prev_stats`.`prev_distinct` = c.id
         ";
 
+        $data = \Yii::$app->db->createCommand($query)->queryAll();
+
+        return $data;
+    }
+
+    public static function getCumulativeRenewal()
+    {
+        $dates = \Yii::$app->Insight->dates;
+
+        $storeQuery = '';
+        if (!empty(\Yii::$app->request->getQueryParam('store_id'))) {
+            $storeQuery .= "where o.store_id = " . (int)\Yii::$app->request->getQueryParam('store_id');
+        }
+
+        $query ="
+select 
+    count(*) / (    select 
+                        count(distinct(c.id)) as `prev_distinct`
+                        #c.id as `cid`,
+                        #o.id as `oid`
+                    from customer c 
+                    inner join `order` o 
+                        on o.customer_id = c.id 
+                            AND o.order_date >= " . $dates['prevWeekSunday'] ."  # start date
+                            AND o.order_date < " .$dates['prevWeekSaturday'] . "
+                            " . $storeQuery . "
+        ) as `cum_renewal_rate`
+from customer c 
+inner join (
+    select 
+        distinct(c.id) as `cur_distinct`
+    from customer c 
+    inner join `order` o 
+        on o.customer_id = c.id 
+        AND o.order_date >= " . $dates['lastWeekSunday'] . "  # start date
+        AND o.order_date < " . $dates['lastWeekSaturday'] . "
+        " . $storeQuery . "
+) as `cur_stats`
+    on `cur_stats`.`cur_distinct` = c.id 
+left join (
+    select 
+        c.id as `prev_distinct`
+    from customer c 
+    inner join `order` o 
+        on o.customer_id = c.id 
+            AND o.order_date >= " . $dates['prevWeekSunday'] . "  # start date
+            AND o.order_date < " . $dates['prevWeekSaturday'] . "
+            " . $storeQuery . "
+) as `prev_stats`
+    on `prev_stats`.`prev_distinct` = c.id 
+    AND `prev_stats`.`prev_distinct` is null
+    ";
+
+        echo '<pre>';
+        echo \yii\helpers\VarDumper::dump(
+            \Yii::$app->db->createCommand($query)->getRawSql(), 10, true);
+        echo '</pre>';
+        exit(1);
         $data = \Yii::$app->db->createCommand($query)->queryAll();
 
         return $data;
