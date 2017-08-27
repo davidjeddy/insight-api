@@ -65,6 +65,7 @@ class Customer extends Base
 select 
     c.id as `customer_id`,
     c.username as `username`,
+    c.role as `role`,
     o.total_amount `total_order_amt`,
     o.store_id as `store_id`,
     s.name as `store_name`
