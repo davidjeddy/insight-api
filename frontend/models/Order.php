@@ -88,4 +88,16 @@ class Order extends Base
 
         return $data;
     }
+
+    public static function getTotalLastWeekCount()
+    {
+        $dates = \Yii::$app->Insight->dates;
+
+        $data = \frontend\models\Order::find()
+            ->andWhere(['>', 'order_date', $dates['lastWeekSunday']])
+            ->andWhere(['<=', 'order_date', $dates['lastWeekSaturday']])
+            ->count();
+
+        return $data;
+    }
 }

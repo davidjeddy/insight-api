@@ -30,6 +30,7 @@ class DashboardController extends BaseController
         $data = [];
 
         $data['revenue']        = round(\frontend\modules\api\v1\resources\Order::getTotalLastWeekRevenue(), 2);
+        $data['aov']            = round($data['revenue'] / \frontend\modules\api\v1\resources\Order::getTotalLastWeekCount(), 2);
         $data['new_customers']  = \frontend\modules\api\v1\resources\Customer::getNewCustomers();
         $data['lost_customers'] = \frontend\modules\api\v1\resources\Customer::getLostCustomers();
 
