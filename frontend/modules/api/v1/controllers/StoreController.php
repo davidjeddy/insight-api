@@ -46,6 +46,9 @@ class StoreController extends BaseController
                 $model->rolling_revenue[$i]['value'] = (int)$data[0]['weekly_revenue'];
             }
         }
+
+        $model->rolling_revenue = array_reverse($model->rolling_revenue);
+
         return $model;
     }
 }
