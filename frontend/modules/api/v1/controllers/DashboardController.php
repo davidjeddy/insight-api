@@ -32,14 +32,15 @@ class DashboardController extends BaseController
     {
         $data = [];
 
+        $data['revenue']    = (float)round(OrderMDL::getTotalLastWeekRevenue(), 2);
+        $data['order_count']= (int)OrderMDL::getTotalLastWeekCount();
+
         if ($data['revenue']) {
             $data['aov'] = round($data['revenue'] / $data['order_count'], 2);
         }
         $renewal    = CustomerMDL::getRenewal();
         $c_renewal  = CustomerMDL::getCumulativeRenewal();
-
-        $data['revenue']            = (float)round(OrderMDL::getTotalLastWeekRevenue(), 2);
-        $data['order_count']        = (int)OrderMDL::getTotalLastWeekCount();
+        
         $data['renewal']            = (float)round(($renewal[0]['renewal_rate'] * 100), 2);
         $data['cumulative_renewal'] = (float)round(($c_renewal[0]['cum_renewal_rate'] * 100), 2);
         $data['new_customers']      = CustomerMDL::getNewCustomers(); // array
