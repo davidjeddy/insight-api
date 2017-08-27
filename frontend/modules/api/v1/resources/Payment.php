@@ -9,7 +9,7 @@ use yii\web\Link;
 /**
  * @author David J Eddy <me@davidjeddy.com>
  */
-class Payment extends \frontend\models\Payment implements Linkable
+class Payment extends \frontend\modules\api\v1\models\Payment implements Linkable
 {
     /**
      * @return array

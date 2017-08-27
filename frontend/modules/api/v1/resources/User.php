@@ -5,7 +5,7 @@ namespace frontend\modules\api\v1\resources;
 /**
  * @author Eugene Terentev <eugene@terentev.net>
  */
-class User extends \common\models\User
+class User extends \frontend\modules\api\v1\models\User
 {
     public function fields()
     {

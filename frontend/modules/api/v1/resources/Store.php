@@ -9,7 +9,7 @@ use yii\web\Link;
 /**
  * @author David J Eddy <me@davidjeddy.com>
  */
-class Store extends \frontend\models\Store implements Linkable
+class Store extends \frontend\modules\api\v1\models\Store implements Linkable
 {
     /**
      * @return array

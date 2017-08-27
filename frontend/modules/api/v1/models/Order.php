@@ -1,8 +1,9 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\modules\api\v1\models;
 
 use Yii;
+use \frontend\modules\api\v1\models\Order as OrderMDL;
 
 /**
  * This is the model class for table "order".
@@ -92,7 +93,7 @@ class Order extends Base
     {
         $dates = \Yii::$app->Insight->dates;
 
-        $data = \frontend\models\Order::find()
+        $data =  OrderMDL::find()
             ->andWhere(['>', 'order_date', $dates['lastWeekSunday']])
             ->andWhere(['<=', 'order_date', $dates['lastWeekSaturday']])
             ->sum('total_amount');
@@ -104,7 +105,7 @@ class Order extends Base
     {
         $dates = \Yii::$app->Insight->dates;
 
-        $data = \frontend\models\Order::find()
+        $data = OrderMDL::find()
             ->andWhere(['>', 'order_date', $dates['lastWeekSunday']])
             ->andWhere(['<=', 'order_date', $dates['lastWeekSaturday']])
             ->count();

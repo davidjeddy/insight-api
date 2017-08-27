@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\modules\api\v1\models;
 
 use Yii;
 
@@ -200,8 +200,16 @@ inner join (
         return $data;
     }
 
+    /**
+     * @return array|bool
+     */
     public static function getCumulativeRenewal()
     {
+        // can only get cumulative if customer group is provided
+        if (\Yii::$app->request->getQueryParam('customer_group')) {
+            return false;
+        }
+
         $dates = \Yii::$app->Insight->dates;
 
         $storeQuery = '';

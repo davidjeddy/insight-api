@@ -9,7 +9,7 @@ use yii\web\Link;
 /**
  * @author David J Eddy <me@davidjeddy.com>
  */
-class Customer extends \frontend\models\Customer implements Linkable
+class Customer extends \frontend\modules\api\v1\models\Customer implements Linkable
 {
     public function fields()
     {
