@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: david
- * Date: 8/26/17
- * Time: 8:07 PM
- */
-
 namespace frontend\modules\api\v1\components;
 
 use yii\base\Component;

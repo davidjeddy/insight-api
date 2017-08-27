@@ -9,6 +9,7 @@ $config = [
             'class' => 'frontend\modules\user\Module',
             'shouldBeActivated' => false
         ],
+
         'api' => [
             'class' => 'frontend\modules\api\Module',
             'modules' => [
