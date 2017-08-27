@@ -248,11 +248,6 @@ left join (
     AND `prev_stats`.`prev_distinct` is null
     ";
 
-        echo '<pre>';
-        echo \yii\helpers\VarDumper::dump(
-            \Yii::$app->db->createCommand($query)->getRawSql(), 10, true);
-        echo '</pre>';
-        exit(1);
         $data = \Yii::$app->db->createCommand($query)->queryAll();
 
         return $data;
