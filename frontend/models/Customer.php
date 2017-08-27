@@ -99,7 +99,7 @@ inner join store s on s.id = o.store_id
     }
 
     /**
-     * @return array
+     * @return \yii\db\DataReader
      */
     public static function getLostCustomers()
     {
@@ -137,6 +137,64 @@ inner join (
         }
 
         $data = \Yii::$app->db->createCommand($query)->query();
+
+        return $data;
+    }
+
+    /**
+     * @return \yii\db\DataReader
+     */
+    public static function getRenewal()
+    {
+        $dates = \Yii::$app->Insight->dates;
+
+        $storyQuery = '';
+        if (!empty(\Yii::$app->request->getQueryParam('store_id'))) {
+            $storyQuery .= "where o.store_id = " . (int)\Yii::$app->request->getQueryParam('store_id');
+        }
+
+        $query = "
+select 
+    
+    count(*) / (    select 
+                        count(distinct(c.id)) as `prev_distinct`
+                    from customer c 
+                    inner join `order` o 
+                        on o.customer_id = c.id 
+                            AND o.order_date >= " . $dates['prevWeekSunday'] . "  # start date
+                            AND o.order_date < " . $dates['prevWeekSaturday'] . "
+                    " . $storyQuery . "
+        ) as `renewal_rate`
+        
+from customer c 
+# This join pulls in the statistics for the PREVIOUS week
+inner join (
+    select 
+        distinct(c.id) as `cur_distinct`
+    from customer c 
+    inner join `order` o 
+        on o.customer_id = c.id 
+        AND o.order_date >= " . $dates['lastWeekSunday'] . "  # start date
+        AND o.order_date < " . $dates['lastWeekSaturday'] . "
+    " . $storyQuery . "
+) as `cur_stats`
+    on `cur_stats`.`cur_distinct` = c.id #`prev_stats`.`prev_distinct`
+inner join (
+    select 
+        c.id as `prev_distinct`
+        #c.id as `cid`,
+        #o.id as `oid`
+    from customer c 
+    inner join `order` o 
+        on o.customer_id = c.id 
+            AND o.order_date >= " . $dates['prevWeekSunday'] . "  # start date
+            AND o.order_date < " . $dates['prevWeekSaturday'] . "
+    " . $storyQuery . "
+) as `prev_stats`
+    on `prev_stats`.`prev_distinct` = c.id
+        ";
+
+        $data = \Yii::$app->db->createCommand($query)->queryAll();
 
         return $data;
     }

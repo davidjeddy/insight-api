@@ -33,7 +33,9 @@ class DashboardController extends BaseController
         $data['order_count']    = (int)\frontend\modules\api\v1\resources\Order::getTotalLastWeekCount();
         $data['aov']            = round($data['revenue'] / $data['order_count'], 2);
 
-        $data['renewal']            = 43;
+        $renewal = \frontend\models\Customer::getRenewal();
+        $data['renewal']            = round(($renewal[0]['renewal_rate'] * 100), 2);
+
         $data['cumulative_renewal'] = 12;
 
         $data['new_customers']  = \frontend\modules\api\v1\resources\Customer::getNewCustomers();
