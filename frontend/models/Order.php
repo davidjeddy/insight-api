@@ -77,6 +77,17 @@ class Order extends Base
         return $this->hasOne(Store::className(), ['store_id' => 'id']);
     }
 
+    public static function find()
+    {
+        $query = parent::find();
+
+        if ($store_id = \Yii::$app->request->getQueryParam('store_id')) {
+            $query->andWhere(['store_id' => $store_id ]);
+        }
+
+        return $query;
+    }
+
     public static function getTotalLastWeekRevenue()
     {
         $dates = \Yii::$app->Insight->dates;
