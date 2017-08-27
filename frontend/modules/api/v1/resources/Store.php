@@ -27,6 +27,8 @@ class Store extends \frontend\models\Store implements Linkable
             'aov',
             'revenue',
             'rolling_revenue',
+            'lati',
+            'long'
         ];
     }
 

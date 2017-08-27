@@ -44,7 +44,8 @@ class Store extends Base
             [['name', 'zip', 'manager_id'], 'required'],
             [['zip', 'manager_id'], 'integer'],
             [['name'], 'string', 'max' => 75],
-            [['manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => Managers::className(), 'targetAttribute' => ['manager_id' => 'manager_id']],
+            [['lati', 'long'], 'strig', 'max' => 16],
+            [['manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => Manager::className(), 'targetAttribute' => ['manager_id' => 'manager_id']],
         ];
     }
 
@@ -58,6 +59,8 @@ class Store extends Base
             'name' => Yii::t('app', 'Name'),
             'zip' => Yii::t('app', 'Zip'),
             'manager_id' => Yii::t('app', 'Manager ID'),
+            'lati' => Yii::t('app', 'Latitude'),
+            'long' => Yii::t('app', 'Longitude'),
         ];
     }
 
