@@ -38,7 +38,7 @@ class DashboardController extends BaseController
 
         $data['new_customers']  = \frontend\modules\api\v1\resources\Customer::getNewCustomers();
         $data['lost_customers'] = \frontend\modules\api\v1\resources\Customer::getLostCustomers();
-        
+
         return $data;
     }
 }

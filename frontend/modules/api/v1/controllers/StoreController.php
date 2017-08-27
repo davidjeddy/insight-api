@@ -40,11 +40,8 @@ class StoreController extends BaseController
 
             $endDate = $endDate - self::SEC_PER_WEEK;
 
-            $value = (int)$data[0]['weekly_revenue'];
-            if ($value >= 1) {
-                $model->rolling_revenue[$i]['data'] = date('n/j/Y', $endDate);
-                $model->rolling_revenue[$i]['value'] = (int)$data[0]['weekly_revenue'];
-            }
+            $model->rolling_revenue[$i]['data'] = date('n/j/Y', $endDate);
+            $model->rolling_revenue[$i]['value'] = (int)$data[0]['weekly_revenue'];
         }
 
         $model->rolling_revenue = array_reverse($model->rolling_revenue);
