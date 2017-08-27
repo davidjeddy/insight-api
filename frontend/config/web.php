@@ -57,6 +57,10 @@ $config = [
             'loginUrl'=>['/user/sign-in/login'],
             'enableAutoLogin' => true,
             'as afterLogin' => 'common\behaviors\LoginTimestampBehavior'
+        ],
+
+        'Insight' => [
+            'class' => frontend\modules\api\v1\components\Insight::class
         ]
     ]
 ];

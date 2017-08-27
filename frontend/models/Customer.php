@@ -53,4 +53,76 @@ class Customer extends Base
     {
         return $this->hasMany(Order::className(), ['customer_id' => 'id']);
     }
+
+    /**
+     * @return array
+     */
+    public static function getNewCustomers()
+    {
+        $dates = \Yii::$app->Insight->dates;
+
+        $data = \Yii::$app->db->createCommand("
+# New customers that didn't buy last week
+select 
+    c.id as `customer_id`,
+    c.username as `username`,
+    o.total_amount `total_order_amt`,
+    o.store_id as `store_id`,
+    s.name as `store_name`
+from customer c
+inner join `order` o on o.customer_id = c.id AND
+# This previous's date range
+o.order_date > " . $dates['lastWeekSunday'] . " AND 
+    o.order_date <=  " . $dates['lastWeekSaturday'] . " AND
+    # Filter out rows for customers that DID purchase 
+    c.id not in
+(
+    select o.customer_id as `customer_id`
+    from `order` o 
+    where 
+    o.order_date >= " . $dates['prevWeekSunday'] . " AND
+    o.order_date <= " . $dates['prevWeekSaturday'] . " 
+) 
+inner join store s on s.id = o.store_id
+        ")->queryAll();
+
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getLostCustomers()
+    {
+        $dates = \Yii::$app->Insight->dates;
+
+        $data = \Yii::$app->db->createCommand("
+# Used to populate the 'Lost Customers' grid
+select c.*, customer_aggregates.* 
+from customer c
+inner join `order` o on o.customer_id = c.id AND
+# This previous's date range
+    o.order_date >= " . $dates['prevWeekSunday'] . " AND
+    o.order_date <= " . $dates['prevWeekSaturday'] . " AND
+    c.id not in
+    (
+    # Customers from THIS week that had an order
+        select o.customer_id as `customer_id`
+    from `order` o 
+    where 
+    o.order_date > " . $dates['lastWeekSunday'] . " AND
+    o.order_date <=  " . $dates['lastWeekSaturday'] . "
+) 
+inner join (
+        select o.customer_id as `customer_id`,
+    sum(total_amount) as `lifetime_amt`,
+    avg(total_amount) as `avg_order_amt`
+    from `order` o 
+    group by o.customer_id
+) as `customer_aggregates` 
+    on `customer_aggregates`.`customer_id` = c.id;
+    ")->queryAll();
+
+        return $data;
+    }
 }

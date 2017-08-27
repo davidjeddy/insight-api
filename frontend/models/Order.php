@@ -76,4 +76,16 @@ class Order extends Base
     {
         return $this->hasOne(Store::className(), ['store_id' => 'id']);
     }
+
+    public static function getTotalLastWeekRevenue()
+    {
+        $dates = \Yii::$app->Insight->dates;
+
+        $data = \frontend\models\Order::find()
+            ->andWhere(['>', 'order_date', $dates['lastWeekSunday']])
+            ->andWhere(['<=', 'order_date', $dates['lastWeekSaturday']])
+            ->sum('total_amount');
+
+        return $data;
+    }
 }
