@@ -16,11 +16,25 @@ class Insight extends Component
 
     public function __construct()
     {
-        parent::__construct();;
+        {
+            parent::__construct();
 
-        $this->dates['prevWeekSunday']  = strtotime('last Sunday - 2 week');
-        $this->dates['prevWeekSaturday']=strtotime('last Sunday - 1 week') -1; // tick backwards into the prev. week;s Saturday
-        $this->dates['lastWeekSunday']  = strtotime('last Sunday - 1 week');
-        $this->dates['lastWeekSaturday']=strtotime('last Saturday');
+            if ($cxGrp = \Yii::$app->request->getQueryParam('customer_group')) {
+                $this->dates['prevWeekSunday']  = strtotime('last Sunday', strtotime($cxGrp));
+                $this->dates['prevWeekSaturday']= strtotime('next Saturday', strtotime($cxGrp));
+            } else {
+                $this->dates['prevWeekSunday']  = strtotime('last Sunday - 2 week');
+                $this->dates['prevWeekSaturday']=strtotime('last Sunday - 1 week') -1; // tick backwards into the prev. week;s Saturday
+            }
+
+            if ($rpDate = \Yii::$app->request->getQueryParam('report_date')) {
+                $this->dates['lastWeekSunday']  = strtotime('last Sunday', strtotime($rpDate));
+                $this->dates['lastWeekSaturday']= strtotime('next Saturday', strtotime($rpDate));
+            } else {
+                $this->dates['lastWeekSunday']  = strtotime('last Sunday - 1 week');
+                $this->dates['lastWeekSaturday']=strtotime('last Saturday');
+            }
+        }
     }
 }
+
