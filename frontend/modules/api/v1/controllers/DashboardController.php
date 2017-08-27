@@ -32,9 +32,13 @@ class DashboardController extends BaseController
         $data['revenue']        = round(\frontend\modules\api\v1\resources\Order::getTotalLastWeekRevenue(), 2);
         $data['order_count']    = (int)\frontend\modules\api\v1\resources\Order::getTotalLastWeekCount();
         $data['aov']            = round($data['revenue'] / $data['order_count'], 2);
+
+        $data['renewal']            = 43;
+        $data['cumulative_renewal'] = 12;
+
         $data['new_customers']  = \frontend\modules\api\v1\resources\Customer::getNewCustomers();
         $data['lost_customers'] = \frontend\modules\api\v1\resources\Customer::getLostCustomers();
-
+        
         return $data;
     }
 }
