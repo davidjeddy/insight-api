@@ -44,15 +44,6 @@ class BaseController extends ActiveController
             // COOOOORRORORORORORORROSSSSS!!! Have to return this POST CORS OPTION request or the browser XHR fails.
             \Yii::$app->response->getHeaders()->set('Access-Control-Allow-Origin', $this->corsDomains);
         }
-
-        // remove query string items that have an empty value
-
-        if (strtotime(\Yii::$app->request->getQueryParam('report_date'))
-            < strtotime(\Yii::$app->request->getQueryParam('customer_group'))
-        ) {
-            \Yii::$app->response->setStatusCode(418);
-            \Yii::$app->end();
-        }
     }
 
     /**
