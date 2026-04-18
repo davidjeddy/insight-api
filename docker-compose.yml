@@ -1,0 +1,40 @@
+data:
+  image: busybox:latest
+  volumes:
+    - ./:/app
+  entrypoint: tail -f /dev/null
+
+app:
+  build: docker/php
+  working_dir: /app
+  volumes_from:
+    - data
+  expose:
+    - 9000
+  links:
+    - mailcatcher
+  environment:
+    XDEBUG_CONFIG: "idekey=PHPSTORM remote_enable=On remote_connect_back=On"
+
+nginx:
+  image: nginx:1.12-alpine
+  ports:
+    - "8080:80"
+  volumes:
+    - ./:/app
+    - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/vhost.conf
+  links:
+    - app
+
+mailcatcher:
+    image: schickling/mailcatcher:latest
+    ports:
+      - "1080:1080"
+
+nginx_ui:
+  image: nginx:1.12-alpine
+  ports:
+    - "80:80"
+  volumes:
+    - ../insight-ui:/app
+    - ./docker/nginx/vhost_ui.conf:/etc/nginx/conf.d/vhost.conf
